@@ -64,7 +64,8 @@ class AuthController extends Controller
 
             //Enviar correo de bienvenida
             $this->mailService = new MailService();
-            $emailSent = $this->mailService->enviarMail($user->name, $user->email);
+            $body = "<h1>Hola, $user->name!</h1><p>Gracias por registrarte en nuestra plataforma.</p>";
+            $emailSent = $this->mailService->enviarMail($user->name, $user->email, $body);
 
 
             DB::commit();

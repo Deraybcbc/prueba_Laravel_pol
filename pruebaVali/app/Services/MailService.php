@@ -12,7 +12,7 @@ class MailService
 
     }
 
-    public function enviarMail($nombre, $email)
+    public function enviarMail($nombre, $email, $body, $pdfPath = null)
     {
         $mail = new PHPMailer(true);
 
@@ -33,7 +33,12 @@ class MailService
             //Contenido del correo
             $mail->isHTML(true);
             $mail->Subject = 'Bienvenido a nuestro sistema';
-            $mail->Body = "<h1>Hola, $nombre!</h1><p>Gracias por registrarte en nuestra plataforma.</p>";
+            $mail->Body = $body;
+
+            // Adjuntar el PDF si existe
+            if ($pdfPath && file_exists($pdfPath)) {
+                $mail->addAttachment($pdfPath, 'informacion_usuario.pdf');
+            }
 
             //Enviar Correo
             $mail->send();
